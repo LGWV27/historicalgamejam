@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmlx3usk3u8mx"]
+
+[ext_resource type="PackedScene" uid="uid://cfnlauggockqg" path="res://Systems/Interactables/interactable.tscn" id="1_leb26"]
+
+[node name="Main" type="Node"]
+
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
+
+[node name="Interactable" parent="." instance=ExtResource("1_leb26")]
+position = Vector2(568, 305)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+lifetime = 43.42
+emission_shape = 1
+emission_sphere_radius = 1.0
