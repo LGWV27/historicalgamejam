@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwlyakkkfp6wi"]
+
+[ext_resource type="Script" path="res://endingscene.gd" id="1_4v8iw"]
+
+[node name="Endingscene" type="Node"]
+script = ExtResource("1_4v8iw")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 5.0
+offset_top = 4.0
+offset_right = 631.0
+offset_bottom = 71.0
+text = "On December 30th, 1916 - Grigori Rasputin was killed at the Moika Palace by a group of nobles."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Timer2" type="Timer" parent="."]
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 15.0
+offset_top = 74.0
+offset_right = 619.0
+offset_bottom = 145.0
+text = "Some reports claim that Rasputin consumed and survived cyanide laced cake and wine this night, but modern analysis contest these claims."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 13.0
+offset_top = 136.0
+offset_right = 629.0
+offset_bottom = 230.0
+text = "In 1917, his body was exhumed and burned on the orders of Alexander Kerensky, leader of the short-lived Russian Republic, in an attempt to prevent his grave from becoming a rallying point for supporters of the old regime"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 4.0
+offset_top = 283.0
+offset_right = 631.0
+offset_bottom = 352.0
+text = "This is my first time making a game, pixel art, dialogue, etc. Thank you for playing, and I look forward to joining the next game jam :)"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_timer_2_timeout"]

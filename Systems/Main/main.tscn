@@ -1,16 +1,350 @@
-[gd_scene load_steps=2 format=3 uid="uid://bmlx3usk3u8mx"]
+[gd_scene load_steps=44 format=3 uid="uid://bmlx3usk3u8mx"]
 
-[ext_resource type="PackedScene" uid="uid://cfnlauggockqg" path="res://Systems/Interactables/interactable.tscn" id="1_leb26"]
+[ext_resource type="Script" path="res://Systems/Main/main.gd" id="1_sovv5"]
+[ext_resource type="Texture2D" uid="uid://cscf5vj3ccev1" path="res://Assets/Clockwork_ClockworkSpy.png" id="1_uiqqa"]
+[ext_resource type="Texture2D" uid="uid://7q8ymw1luffh" path="res://Assets/Rasputinhighlight.png" id="2_il628"]
+[ext_resource type="Texture2D" uid="uid://dubr4p7bxj6r1" path="res://Assets/Rasputin.png" id="3_xjl8o"]
+[ext_resource type="Script" path="res://Systems/Interactables/interactable.gd" id="4_b3qfh"]
+[ext_resource type="Texture2D" uid="uid://c60jn5jk1ag8j" path="res://Assets/RasputinBackground1.png" id="4_lxpj6"]
+[ext_resource type="Texture2D" uid="uid://cun7oisgntd1o" path="res://Assets/RasputinBackground2.png" id="5_3gx2i"]
+[ext_resource type="Resource" uid="uid://d4ia0d63fpfbk" path="res://Dialogue/main.dialogue" id="5_4uv7b"]
+[ext_resource type="Script" path="res://player.gd" id="5_82osi"]
+[ext_resource type="Texture2D" uid="uid://c3qnsl8vmnh3s" path="res://Assets/RasputinBackground3.png" id="6_2ub38"]
+[ext_resource type="Texture2D" uid="uid://d1egsyvswd37u" path="res://Assets/DetectiveMoving.png" id="6_itx05"]
+[ext_resource type="FontFile" uid="uid://cmcbdugxexp2y" path="res://CourierPrime-Regular.ttf" id="7_dbjb4"]
+[ext_resource type="Texture2D" uid="uid://c1xbxenkg05wb" path="res://Assets/DetectiveMoving-Sheet.png" id="7_fks5e"]
+[ext_resource type="Script" path="res://Systems/Main/Window.gd" id="13_unb2h"]
+[ext_resource type="Texture2D" uid="uid://c3u0kknhkcr4m" path="res://Assets/window.png" id="15_epwfc"]
+[ext_resource type="Script" path="res://Systems/Main/Suspects.gd" id="15_mk7xj"]
+[ext_resource type="Script" path="res://Systems/Main/Rock.gd" id="16_ksvwc"]
+[ext_resource type="Texture2D" uid="uid://cbrpmh4i522bb" path="res://Assets/windowHighlighted.png" id="16_ogohi"]
+[ext_resource type="Script" path="res://Systems/Main/autoload.gd" id="18_g8vvn"]
+[ext_resource type="Texture2D" uid="uid://1p8fk80wfyx0" path="res://Assets/doord.png" id="18_qi5fo"]
+[ext_resource type="Texture2D" uid="uid://b0cd5fue06it4" path="res://Assets/doorHighlighted.png" id="19_lar6p"]
+[ext_resource type="Texture2D" uid="uid://dauwxlrbl8j3q" path="res://Assets/rock.png" id="21_uh11v"]
+[ext_resource type="Texture2D" uid="uid://midve672di7o" path="res://Assets/rockHighlighted.png" id="22_vpu2w"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hclsc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_uiqqa")
+}],
+"loop": true,
+"name": &"Highlighted",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_il628")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_xjl8o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clnex"]
+size = Vector2(128, 129)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cucgy"]
+size = Vector2(1920, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b6cpq"]
+size = Vector2(20, 1075)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3leb"]
+size = Vector2(17, 1067)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elvma"]
+atlas = ExtResource("7_fks5e")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlwlf"]
+atlas = ExtResource("7_fks5e")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqypi"]
+atlas = ExtResource("7_fks5e")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efebb"]
+atlas = ExtResource("7_fks5e")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kyk5d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_itx05")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elvma")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlwlf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqypi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efebb")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_364oq"]
+size = Vector2(23, 117)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3oqhl"]
+font = ExtResource("7_dbjb4")
+font_size = 15
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5jwqi"]
+size = Vector2(29, 118)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_roknd"]
+size = Vector2(165.5, 1094)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eu7p0"]
+size = Vector2(70, 73)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q32yt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_epwfc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ogohi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_56nm2"]
+size = Vector2(173, 438)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fiacd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_qi5fo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_lar6p")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2b78t"]
+size = Vector2(39, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tg5iu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_uh11v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_vpu2w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_sovv5")
 
-[node name="TileMap" type="TileMap" parent="."]
-format = 2
+[node name="Dead Body" type="AnimatedSprite2D" parent="."]
+position = Vector2(1293, 572)
+sprite_frames = SubResource("SpriteFrames_hclsc")
+script = ExtResource("4_b3qfh")
+defaultSprite = 1
+highlightedSprite = 0
+dialogue_resource = ExtResource("5_4uv7b")
 
-[node name="Interactable" parent="." instance=ExtResource("1_leb26")]
-position = Vector2(568, 305)
+[node name="Area2D" type="Area2D" parent="Dead Body"]
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-lifetime = 43.42
-emission_shape = 1
-emission_sphere_radius = 1.0
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dead Body/Area2D"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_clnex")
+
+[node name="Timer" type="Timer" parent="Dead Body"]
+wait_time = 10.0
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(555, 651)
+shape = SubResource("RectangleShape2D_cucgy")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Floor"]
+position = Vector2(-395, 103.5)
+shape = SubResource("RectangleShape2D_b6cpq")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Floor"]
+position = Vector2(1507, 109)
+shape = SubResource("RectangleShape2D_o3leb")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+z_index = 1
+position = Vector2(1144, 577)
+script = ExtResource("5_82osi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+sprite_frames = SubResource("SpriteFrames_kyk5d")
+animation = &"Walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(-1.5, 5.5)
+shape = SubResource("RectangleShape2D_364oq")
+
+[node name="Label" type="Label" parent="CharacterBody2D"]
+offset_left = -81.0
+offset_top = -71.0
+offset_right = 81.0
+offset_bottom = -48.0
+text = "test"
+label_settings = SubResource("LabelSettings_3oqhl")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="CharacterBody2D/Label"]
+wait_time = 3.0
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+position = Vector2(-0.5, 5)
+shape = SubResource("RectangleShape2D_5jwqi")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="CharacterBody2D"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Area2D"]
+position = Vector2(-359.5, 114)
+shape = SubResource("RectangleShape2D_roknd")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls/Area2D"]
+position = Vector2(1457.75, 114)
+shape = SubResource("RectangleShape2D_roknd")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1144, 577)
+zoom = Vector2(0.7, 0.7)
+limit_left = -405
+limit_top = -432
+limit_right = 1515
+limit_bottom = 648
+editor_draw_limits = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2(555, 109)
+scale = Vector2(3, 3)
+texture = ExtResource("4_lxpj6")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.99, 0.99)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+position = Vector2(555, 109)
+scale = Vector2(3, 3)
+texture = ExtResource("5_3gx2i")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.96, 0.96)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+position = Vector2(555, 109)
+scale = Vector2(3, 3)
+texture = ExtResource("6_2ub38")
+
+[node name="Interactables" type="Node2D" parent="."]
+
+[node name="Window" type="Area2D" parent="Interactables"]
+script = ExtResource("13_unb2h")
+dialogue_resource = ExtResource("5_4uv7b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Window"]
+position = Vector2(-216, 584.5)
+shape = SubResource("RectangleShape2D_eu7p0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Interactables/Window"]
+position = Vector2(-217.5, 581.5)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_q32yt")
+
+[node name="Suspects" type="Area2D" parent="Interactables"]
+script = ExtResource("15_mk7xj")
+dialogue_resource = ExtResource("5_4uv7b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Suspects"]
+position = Vector2(549.5, 391)
+shape = SubResource("RectangleShape2D_56nm2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Interactables/Suspects"]
+position = Vector2(553.5, 382)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_fiacd")
+
+[node name="Rock" type="Area2D" parent="Interactables"]
+script = ExtResource("16_ksvwc")
+dialogue_resource = ExtResource("5_4uv7b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Rock"]
+position = Vector2(895, 620)
+shape = SubResource("RectangleShape2D_2b78t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Interactables/Rock"]
+position = Vector2(894, 613)
+scale = Vector2(1.73529, 1.38235)
+sprite_frames = SubResource("SpriteFrames_tg5iu")
+
+[node name="autoload" type="Node" parent="."]
+script = ExtResource("18_g8vvn")
+
+[connection signal="labelDisplay" from="Dead Body" to="CharacterBody2D" method="_on_dead_body_label_display"]
+[connection signal="labelHide" from="Dead Body" to="CharacterBody2D" method="_on_dead_body_label_hide"]
+[connection signal="mouse_entered" from="Dead Body/Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_entered" from="Dead Body/Area2D" to="Dead Body" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_entered" from="Dead Body/Area2D" to="CharacterBody2D" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Dead Body/Area2D" to="Dead Body" method="_on_area_2d_mouse_exited"]
+[connection signal="timeout" from="Dead Body/Timer" to="Dead Body" method="_on_timer_timeout"]
+[connection signal="timeout" from="CharacterBody2D/Label/Timer" to="CharacterBody2D" method="_on_timer_timeout"]
+[connection signal="area_entered" from="Walls/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Walls/Area2D" to="CharacterBody2D" method="_on_area_2d_area_exited"]
+[connection signal="mouse_entered" from="Interactables/Window" to="CharacterBody2D" method="_on_window_mouse_entered"]
+[connection signal="mouse_entered" from="Interactables/Window" to="Interactables/Window" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Interactables/Window" to="Interactables/Window" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Interactables/Suspects" to="CharacterBody2D" method="_on_suspects_mouse_entered"]
+[connection signal="mouse_entered" from="Interactables/Suspects" to="Interactables/Suspects" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Interactables/Suspects" to="Interactables/Suspects" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Interactables/Rock" to="CharacterBody2D" method="_on_rock_mouse_entered"]
+[connection signal="mouse_entered" from="Interactables/Rock" to="Interactables/Rock" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Interactables/Rock" to="Interactables/Rock" method="_on_mouse_exited"]
+[connection signal="my_signal" from="autoload" to="." method="_on_autoload_my_signal"]

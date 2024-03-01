@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfnlauggockqg"]
+[gd_scene load_steps=7 format=3 uid="uid://cfnlauggockqg"]
 
 [ext_resource type="Texture2D" uid="uid://cscf5vj3ccev1" path="res://Assets/Clockwork_ClockworkSpy.png" id="1_q7hnc"]
-[ext_resource type="Texture2D" uid="uid://cfryu3gr53d77" path="res://icon.svg" id="1_yh5f3"]
 [ext_resource type="Script" path="res://Systems/Interactables/interactable.gd" id="2_jtw5t"]
+[ext_resource type="Texture2D" uid="uid://dubr4p7bxj6r1" path="res://Assets/Rasputin.png" id="3_ip0bb"]
+[ext_resource type="Texture2D" uid="uid://7q8ymw1luffh" path="res://Assets/Rasputinhighlight.png" id="3_tk8du"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hclsc"]
 animations = [{
@@ -16,7 +17,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_yh5f3")
+"texture": ExtResource("3_tk8du")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ip0bb")
 }],
 "loop": true,
 "name": &"default",
@@ -27,6 +31,7 @@ animations = [{
 size = Vector2(128, 129)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+position = Vector2(3, 1)
 sprite_frames = SubResource("SpriteFrames_hclsc")
 script = ExtResource("2_jtw5t")
 

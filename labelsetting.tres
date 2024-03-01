@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dxloks66ujdfh"]
+
+[ext_resource type="FontFile" uid="uid://cmcbdugxexp2y" path="res://CourierPrime-Regular.ttf" id="1_mqgnx"]
+
+[resource]
+font = ExtResource("1_mqgnx")
+font_size = 15
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 2)

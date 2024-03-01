@@ -3,12 +3,20 @@ extends AnimatedSprite2D
 var MouseInArea: bool = false
 var alpha = 1.0
 @onready var animated_sprite : AnimatedSprite2D = self
-@onready var label : Label = $Label
-@onready var timer : Timer = $Label/Timer
+@export var defaultSprite = 0
+@export var highlightedSprite = 1
+#@export var IsCollectable = false
+#@export var text = "Insert Text Here"
+@export var dialogue_resource: DialogueResource
+@export var dialogue_start: String = "start"
+const Balloon = preload("res://Dialogue/balloon.tscn")
+
+signal labelDisplay (labelText)
+signal labelHide()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	label.set_visible_characters(0)
+	animated_sprite.frame = defaultSprite
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -20,24 +28,18 @@ func _unhandled_input(event):
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
 				print("Left button was clicked at ", event.position)
-				label.set_visible_characters(-1)
-				timer.start(5)
-				#TODO - Change label to fade in / out
+				var balloon: Node = Balloon.instantiate()
+				get_tree().current_scene.add_child(balloon)
+				balloon.start(dialogue_resource, dialogue_start)
 			else:
 				print("Left button was released")
 
 
 func _on_area_2d_mouse_entered():
 	MouseInArea = true
-	animated_sprite.play("Highlighted")
+	animated_sprite.frame = highlightedSprite
 
 
 func _on_area_2d_mouse_exited():
 	MouseInArea = false
-	animated_sprite.play("default")
-
-
-func _on_timer_timeout():
-	label.set_visible_characters(0)
-	#TODO - Change label to fade in / out
-	
+	animated_sprite.frame = defaultSprite

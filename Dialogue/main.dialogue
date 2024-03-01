@@ -1,0 +1,211 @@
+~ start
+if bodySeen == false:
+	Detective Rick Savage: A dead body, Grigori Rasputin.
+	Detective Rick Savage: I've heard of him before, A Russian holy man who had considerable influence with the imperial family of the Russian Empire.
+	Detective Rick Savage: I remember! A group of nobles conspired to kill him. But how did they do it?
+	set bodySeen = true
+else:
+	Detective Rick Savage: Good, it's still here. What if he ran off!
+=> bodyInves
+
+~ bodyInves
+Detective Rick Savage: Now, what to do?
+- Examine wounds
+	Detective Rick Savage: Several gun shot wounds - 3 to the chest, one to the forehead. Interesting, some of the shots entered from the front, while others entered from the back.
+	Detective Rick Savage: But were these shots the cause of death, or post mortum?
+	=> bodyInves
+- Examine body
+	Detective Rick Savage: Stomach is bloated, recently ate - a lot. Lips are stained with wine.
+	if hasWine == true:
+		Detective Rick Savage: Must have been that Madeira wine from the basement.
+	if hasPoison == true:
+		Detective Rick Savage: But that wine was poisoned! Strange, he doesn't have any of the signs of dying from cyanide.
+	=> bodyInves
+- Check Surroundings
+	Detective Rick Savage: Heavy footsteps in the snow. Looks like he was running away from the left before he fell here.
+	Detective Rick Savage: Another set of footsteps from the left, likely the shooter. I'll need to find the weapon.
+	=> bodyInves
+- Cut open [if hasKnife == true and cutOpen == false]
+	Detective Rick Savage: I'm pretty sure this breaks a lot of laws, and basic moral boundaries, but I just have to know!
+	Detective Rick Savage: Ew. Well, stomach is full. Wine and cake. That's helpful... I guess? 
+	set cutOpen = true
+	=> bodyInves
+- Examine dissection [if cutOpen == true]
+	Detective Rick Savage: Still gross. The stomach is full. Wine and cake. Still not sure why I did this?
+	=> bodyInves
+- leave body
+	=> END
+
+~ cellarWindowExamine
+if windowBroken == false:
+	Detective Rick Savage: Ah, I can see through the frost on this window! Looks like some kind of cellar room. I can see some food and wine out, I wonder if I can find a way in.
+	- Break Window with Rock [if Rock == true]
+		Detective Rick Savage: A bit caveman-esque of me, but hey - gotta find evidence!
+		set windowBroken = true
+		=> cellarWindowExamine
+	- Break Window with Hammer [if Hammer == true]
+		Detective Rick Savage: Hammer time!
+		set windowBroken = true
+		=> cellarWindowExamine
+	- Unlock Window with Key [if Key == true]
+		Detective Rick Savage: A little mundane, but probably the closest to legal.
+		set windowBroken = true
+		=> cellarWindowExamine
+	- Leave Window
+		Detective Rick Savage: Don't have a way through this window. Gotta find a way to open it.
+		=> END
+else:
+	Detective Rick Savage: Should be able to enter here now.
+	- Enter Cellar
+		=> enterCellar
+	- Leave Window
+		=> END
+
+~ enterCellar
+Detective Rick Savage: Smells stale down here. Wine racks on the walls, some seating. Looks like they were playing cards. A desk against the rear wall.
+- Examine wine rack
+	Detective Rick Savage: Hm... It's missing a bottle. The rack looks organized by year. The missing bottle is likely a 1900.
+	Detective Rick Savage: Surely they won't notice another missing bottle. Have to celebrate once I solve this one after all! Yoink!
+	=> enterCellar
+- Examine card game [if hasCake == false or hasWine == false]
+	Detective Rick Savage: Game was set for 4 players. A bottle of wine, and some cake has been set out. Strange, only one of the glasses has any wine in it.
+	- Examine cake [if hasCake == false]
+		Detective Rick Savage: One slice is missing. The inside of the cake looks... wet? Too wet. Smells of almonds. I'll bag some of this, just in case.
+		set hasCake = true
+		if hasPoison == true:
+			Detective Rick Savage: A smell of almonds - it might be the poison! I should make sure not to try it. Darn.
+		=> enterCellar
+	- Examine wine [if hasWine == false]
+		Detective Rick Savage: Ah - a bottle of Madeira 1900. Not too bad. Strange that only one person drank from it. Smells of... almonds? I'll take some, just in case.
+		set hasWine = true
+		if hasPoison == true:
+			Detective Rick Savage: Almonds - possibly the wine has been poisoned. Let's not drink this.
+		=> enterCellar
+- Examine desk [if hasPoison == false or hasMotive == false or hasGun == false]
+	Detective Rick Savage: Nice wood, a good piece of solid furniture. Shame I can't bring this back with me. Looks like there is some paperwork on the desktop, a revolver, and a few open drawers.
+	- Look through drawers [if hasPoison == false]
+		Detective Rick Savage: Well what do you have here - potassium cyanide. The bottle is open, and some of the powder is missing. Smells of... almonds?
+		if hasWine == true:
+			Detective Rick Savage: Almonds! The wine smelled of this! It must be poisoned.
+		if hasCake == true:
+			Detective Rick Savage: The cake - it smelled oddly of almonds! It is poisoned!
+		Detective Rick Savage: But death by cyanide is quick, and involves vomiting and seizures. No signs of this were shown on Rasputin's body.
+		set hasPoison = true
+		Detective Rick Savage: And a knife! Looks unused though.
+		set hasKnife = true
+		=> enterCellar
+	- Look through papers [if hasMotive == false]
+		Detective Rick Savage: Mostly junk, but here is a letter! Seems to be a long correspondence between Purishkevich, Pavlovich, and Yusupov - the killers!
+		Detective Rick Savage: Seems they planned out this murder. They planned to lure Rasputin here, and kill him. Odd that the body was outside... must have gone poorly.
+		Detective Rick Savage: They are angry, fearful even over Rasputin's influence over the nobility and the Russian Empire overall. A motive, if I've ever seen one.
+		set hasMotive = true
+		=> enterCellar
+	- Examine revolver [if hasGun == false]
+		Detective Rick Savage: 4 rounds have been fired. Barrel has residue, a result of a close range execution style shot.
+		set hasGun = true
+		=> enterCellar
+- Leave cellar
+	=> END
+
+~ interrogateSuspects
+if metSuspects == false:
+	Detective Rick Savage: Purishkevich, Pavlovich, and Yusupov - the three killers of Rasputin. Let's see what they have to say for themselves.
+	set metSuspects = true
+	=> suspectDialogue
+if metSuspects == true:
+	Detective Rick Savage: Hey [[Hooligans|Losers|Wimps|Poopyheads]]!
+	% Purishkevich: ... What now detective?
+	% Pavlovich: I suppose I shouldn't expect civility from your kind. What do you need now?
+	% Yusupov: Good evening to yourself. Surely we have answered all of your questions by now.
+	=> suspectDialogue
+
+~ suspectDialogue
+Detective Rick Savage: Now, what to ask?
+- So... Did you kill Rasputin?
+	% Purishkevich: No.
+	% Pavlovich: No.
+	% Yusupov: No.
+	Detective Rick Savage: Sure you didn't.
+	=> suspectDialogue
+- I'll need a key to the Manor. [if Key == false]
+	Yusupov: Fine, here. Don't break anything.
+	set Key = true
+	=> suspectDialogue
+- Try this wine, would you? [if hasWine == true and WineTalk == false]
+	Pavlovich: I'd rather not. Given the situtation, I believe it's best to keep a sober mind.
+	Detective Rick Savage: Of course. Mind if I have a drink?
+	Pavlovich: Please do.
+	Detective Rick Savage: We'll see. Let's continue for now.
+	set WineTalk = true
+	=> suspectDialogue
+- Would you like some cake? [if hasCake == true and CakeTalk == false]
+	Purishkevich: I'm not too interested in sweets currently, detective.
+	Detective Rick Savage: Ah - watching your figure? Of course!
+	set CakeTalk = true
+	=> suspectDialogue
+- What do you three know about cyanide? [if hasPoison == true]
+	Yusupov: I've read of it. Nothing more.
+	Detective Rick Savage: And what are its effects on the body? Surely you must know.
+	Yusupov: Seizures, foaming at the mouth, vomiting I believe.
+	if bodySeen == true:
+		Detective Rick Savage: Strange... Rasputin's body didn't have any signs of vomiting, or any of that.
+		Yusupov: What was that, Detective?
+		Detective Rick Savage: Er, nothing.
+	=> suspectDialogue
+- You were not a fan of Rasputin in these letters [if hasMotive == true]
+	Pavlovich: I've never seen those before. They must be forgeries.
+	Detective Rick Savage: Well that is certainly convenient. I'll keep that in mind.
+	=> suspectDialogue
+- What do you know of this firearm? [if hasGun == true]
+	Yusupov: I've never seen that before.
+	Detective Rick Savage: Give me your hand.
+	Detective Rick Savage: And what is this burn on your thumb?
+	Yusupov: I burnt myself this morning detective on a hot iron. That is all.
+	=> suspectDialogue
+- Accuse suspects
+	=> accusation
+- Leave suspects
+	=> END
+	
+~ accusation
+Detective Rick Savage: I think I've solved this. Let's see now. The three killers killed Rasputin using...
+- Poisoned wine [if hasWine == true]
+	Detective Rick Savage: Because ...
+	- They feared his influence on Russian nobility [if hasMotive == true]
+		Detective Rick Savage: No - something is wrong.
+		=> accusation
+	- Nevermind
+		=> END
+- Poisoned cake [if hasCake == true]
+	Detective Rick Savage: Because ...
+	- They feared his influence on Russian nobility [if hasMotive == true]
+		Detective Rick Savage: No - something is wrong.
+		=> accusation
+	- Nevermind
+		=> END
+- A revolver [if hasGun == true]
+	Detective Rick Savage: Because ...
+	- They feared his influence on Russian nobility [if hasMotive == true]
+		Detective Rick Savage: Yes! Time to get out of here!
+		- Exit time period
+			do wait(0.5)
+			do emit("my_signal")
+			=> END
+	- Nevermind
+		=> END
+- Nevermind
+	=> END
+
+~ rock
+if Rock == false:
+	Detective Rick Savage: A rock. Excellent.
+	- Take rock [if Rock == false]
+		Detective Rick Savage: May as well!
+		set Rock = true
+		=> END
+	- Leave
+		=> END
+else:
+	Detective Rick Savage: I do like this rock. I'd rather like to keep it.
+	 - Leave
+		=> END

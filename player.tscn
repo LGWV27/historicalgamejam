@@ -1,0 +1,90 @@
+[gd_scene load_steps=12 format=3 uid="uid://di25o6wdmlagq"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_n3oyb"]
+[ext_resource type="Texture2D" uid="uid://cscf5vj3ccev1" path="res://Assets/Clockwork_ClockworkSpy.png" id="2_x2h3k"]
+[ext_resource type="LabelSettings" uid="uid://dxloks66ujdfh" path="res://labelsetting.tres" id="3_ax2bd"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rspxu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqk54"]
+atlas = SubResource("CompressedTexture2D_rspxu")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdmkn"]
+atlas = SubResource("CompressedTexture2D_rspxu")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvist"]
+atlas = SubResource("CompressedTexture2D_rspxu")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxxkg"]
+atlas = SubResource("CompressedTexture2D_rspxu")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kyk5d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_x2h3k")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nqk54")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdmkn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dvist")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxxkg")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_364oq"]
+size = Vector2(23, 117)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5jwqi"]
+size = Vector2(29, 118)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_n3oyb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, 0)
+sprite_frames = SubResource("SpriteFrames_kyk5d")
+animation = &"Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 5.5)
+shape = SubResource("RectangleShape2D_364oq")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -81.0
+offset_top = -71.0
+offset_right = 81.0
+offset_bottom = -48.0
+text = "test"
+label_settings = ExtResource("3_ax2bd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="Label"]
+wait_time = 3.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 5)
+shape = SubResource("RectangleShape2D_5jwqi")
+
+[connection signal="timeout" from="Label/Timer" to="." method="_on_timer_timeout"]
